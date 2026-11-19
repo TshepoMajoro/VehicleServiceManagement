@@ -1,5 +1,7 @@
 package org.springtech.vehicleservicemanagement.Controllers;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springtech.vehicleservicemanagement.DTOs.VehicleServiceRequest;
@@ -32,14 +34,19 @@ public class VehicleServiceController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createService(@RequestBody VehicleServiceRequest request){
-        vehicleService.addService(request);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<VehicleServiceResponse> createService(@Valid @RequestBody VehicleServiceRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(vehicleService.addService(request));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteService(@PathVariable long id) throws ResourceNotFoundException {
         vehicleService.deleteServiceById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateService(@PathVariable long id, @RequestBody VehicleServiceRequest request) throws ResourceNotFoundException {
+        vehicleService.updateService(id, request);
         return ResponseEntity.noContent().build();
     }
 }

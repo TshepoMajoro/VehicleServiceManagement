@@ -52,9 +52,10 @@ public class VehicleService {
     }
 
     @Transactional
-    public void addService(VehicleServiceRequest request){
+    public VehicleServiceResponse addService(VehicleServiceRequest request){
         VehicleServiceEntity entity = mapRequestToEntity(request);
-        vehicleServiceRepository.save(entity);
+        entity = vehicleServiceRepository.save(entity);
+        return mapEntityToResponse(entity);
     }
 
     @Transactional
@@ -63,6 +64,16 @@ public class VehicleService {
             throw new ResourceNotFoundException("resource with id "+id+" not found.");
         }
         vehicleServiceRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateService(long id, VehicleServiceRequest request) throws ResourceNotFoundException {
+        if (!vehicleServiceRepository.existsById(id)){
+            throw new ResourceNotFoundException("resource with id "+id+" not found.");
+        }
+        VehicleServiceEntity entity = mapRequestToEntity(request);
+        entity.setId(id);
+        vehicleServiceRepository.save(entity);
     }
 
 }
