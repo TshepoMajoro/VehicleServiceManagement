@@ -1,5 +1,10 @@
 package org.springtech.vehicleservicemanagement.Entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Setter
@@ -7,10 +12,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="Services")
+@Table(name = "Services")
 public class VehicleServiceEntity {
     @Id
-    @GeneratedValue(strategy = GENERATEDALWAYS.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
     private String cost;
