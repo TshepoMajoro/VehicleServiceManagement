@@ -19,10 +19,10 @@ public class VehicleServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
+    @Column(name = "cost")
     private BigDecimal cost;
-    @Column
+    @Column(name = "location")
     private String location;
-    @Column
+    @Column(name = "date")
     private LocalDate date;
 }
