@@ -57,4 +57,12 @@ public class VehicleService {
         vehicleServiceRepository.save(entity);
     }
 
+    @Transactional
+    public void deleteServiceById(long id) throws ResourceNotFoundException {
+        if (!vehicleServiceRepository.existsById(id)){
+            throw new ResourceNotFoundException("resource with id "+id+" not found.");
+        }
+        vehicleServiceRepository.deleteById(id);
+    }
+
 }

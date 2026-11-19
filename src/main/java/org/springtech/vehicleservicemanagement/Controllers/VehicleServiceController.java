@@ -26,7 +26,7 @@ public class VehicleServiceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VehicleServiceResponse> getById(long id) throws ResourceNotFoundException {
+    public ResponseEntity<VehicleServiceResponse> getById(@PathVariable long id) throws ResourceNotFoundException {
         VehicleServiceResponse response = vehicleService.getServiceById(id);
         return ResponseEntity.ok(response);
     }
@@ -34,6 +34,12 @@ public class VehicleServiceController {
     @PostMapping
     public ResponseEntity<Void> createService(@RequestBody VehicleServiceRequest request){
         vehicleService.addService(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteService(@PathVariable long id) throws ResourceNotFoundException {
+        vehicleService.deleteServiceById(id);
         return ResponseEntity.noContent().build();
     }
 }
