@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Setter
@@ -18,7 +20,7 @@ public class VehicleServiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
-    private String cost;
+    private BigDecimal cost;
     @Column
     private String location;
     @Column
