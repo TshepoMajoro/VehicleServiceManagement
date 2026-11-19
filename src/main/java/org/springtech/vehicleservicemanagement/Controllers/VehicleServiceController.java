@@ -1,11 +1,9 @@
 package org.springtech.vehicleservicemanagement.Controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springtech.vehicleservicemanagement.DTOs.VehicleServiceRequest;
 import org.springtech.vehicleservicemanagement.DTOs.VehicleServiceResponse;
-import org.springtech.vehicleservicemanagement.Entities.VehicleServiceEntity;
 import org.springtech.vehicleservicemanagement.Exceptions.ResourceNotFoundException;
 import org.springtech.vehicleservicemanagement.Services.VehicleService;
 
@@ -31,5 +29,11 @@ public class VehicleServiceController {
     public ResponseEntity<VehicleServiceResponse> getById(long id) throws ResourceNotFoundException {
         VehicleServiceResponse response = vehicleService.getServiceById(id);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createService(@RequestBody VehicleServiceRequest request){
+        vehicleService.addService(request);
+        return ResponseEntity.noContent().build();
     }
 }

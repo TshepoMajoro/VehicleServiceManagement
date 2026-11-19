@@ -2,6 +2,7 @@ package org.springtech.vehicleservicemanagement.Services;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springtech.vehicleservicemanagement.DTOs.VehicleServiceRequest;
 import org.springtech.vehicleservicemanagement.DTOs.VehicleServiceResponse;
 import org.springtech.vehicleservicemanagement.Entities.VehicleServiceEntity;
 import org.springtech.vehicleservicemanagement.Exceptions.ResourceNotFoundException;
@@ -26,6 +27,16 @@ public class VehicleService {
         );
     }
 
+    private VehicleServiceEntity mapRequestToEntity(VehicleServiceRequest request){
+        VehicleServiceEntity entity = new VehicleServiceEntity();
+
+        entity.setCost(request.cost());
+        entity.setLocation(request.location());
+        entity.setDate(request.date());
+
+        return entity;
+    }
+
     @Transactional
     public List<VehicleServiceResponse> getAllBookedServices(){
         return vehicleServiceRepository.findAll().stream().map(service -> mapEntityToResponse(service)).toList();
@@ -38,6 +49,12 @@ public class VehicleService {
         }
         VehicleServiceEntity service = vehicleServiceRepository.findById(id).get();
         return mapEntityToResponse(service);
+    }
+
+    @Transactional
+    public void addService(VehicleServiceRequest request){
+        VehicleServiceEntity entity = mapRequestToEntity(request);
+        vehicleServiceRepository.save(entity);
     }
 
 }
