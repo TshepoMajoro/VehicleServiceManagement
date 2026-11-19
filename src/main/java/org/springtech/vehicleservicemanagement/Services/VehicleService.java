@@ -1,8 +1,10 @@
 package org.springtech.vehicleservicemanagement.Services;
-import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import org.springtech.vehicleservicemanagement.DTOs.VehicleServiceResponse;
 import org.springtech.vehicleservicemanagement.Entities.VehicleServiceEntity;
+import org.springtech.vehicleservicemanagement.Exceptions.ResourceNotFoundException;
 import org.springtech.vehicleservicemanagement.Repository.VehicleServiceRepository;
 
 import java.util.List;
@@ -28,4 +30,14 @@ public class VehicleService {
     public List<VehicleServiceResponse> getAllBookedServices(){
         return vehicleServiceRepository.findAll().stream().map(service -> mapEntityToResponse(service)).toList();
     }
+
+    @Transactional
+    public VehicleServiceResponse getServiceById(long id) throws ResourceNotFoundException {
+        if (!vehicleServiceRepository.existsById(id)){
+            throw new ResourceNotFoundException("resource with id "+id+" not found.");
+        }
+        VehicleServiceEntity service = vehicleServiceRepository.findById(id).get();
+        return mapEntityToResponse(service);
+    }
+
 }
